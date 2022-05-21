@@ -1,0 +1,15 @@
+epochs:
+  desc: number of epochs
+  value: 100
+
+num_layers:
+  desc: number of layers of the network
+  value: 2
+
+learning_rate:
+  desc: learning rate
+  value: 0.001
+
+model_folder:
+  desc: where models are saved
+  value: 'models'
