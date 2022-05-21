@@ -1,4 +1,4 @@
-def train(mode, dataset):
+def train(model, dataset):
     pass
 
 
