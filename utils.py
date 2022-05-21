@@ -4,6 +4,20 @@ import torch
 import datetime
 import os
 import wandb
+import torchvision
+import torchvision.transforms as transforms
+
+
+def get_data(slice=5, train=True):
+    full_dataset = torchvision.datasets.MNIST(root=".",
+                                              train=train,
+                                              transform=transforms.ToTensor(),
+                                              download=True)
+    #  equiv to slicing with [::slice]
+    sub_dataset = torch.utils.data.Subset(
+        full_dataset, indices=range(0, len(full_dataset), slice))
+
+    return sub_dataset
 
 
 def load_default_config_if_needed(config_path, wandb_config_object):

@@ -4,11 +4,25 @@ epochs:
 
 num_layers:
   desc: number of layers of the network
-  value: 2
+  value: 3
+
+channels:
+  desc: channels of cnn layers
+  value: 5
+
+kernel_size:
+  desc: size of cnn filter kernel
+  value: 3
 
 learning_rate:
   desc: learning rate
   value: 0.001
+
+input_dimensions:
+  desc: input dimensions
+  value:
+    height: 28
+    width: 28
 
 model_folder:
   desc: where models are saved
