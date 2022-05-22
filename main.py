@@ -1,34 +1,46 @@
 import torch
 import wandb
-import random
-import numpy as np
 
 from model_cnn import CNNModel
-from utils import save_model, get_data
+from utils import save_model, get_data, set_random_seeds
 from train import train
 
 if __name__ == '__main__':
-    # Ensure deterministic behavior
-    torch.backends.cudnn.deterministic = True
-    random.seed(hash("setting random seeds") % 2 ** 32 - 1)
-    np.random.seed(hash("improves reproducibility") % 2 ** 32 - 1)
-    torch.manual_seed(hash("by removing stochasticity") % 2 ** 32 - 1)
-    torch.cuda.manual_seed_all(hash("so runs are repeatable") % 2 ** 32 - 1)
+    with wandb.init(project='test-cnn', mode='online'):  # mode: ['online', 'disabled']
+        # Ensure deterministic behavior
+        set_random_seeds()
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    train_dataset = get_data(slice=1000, train=True)
-    val_dataset = get_data(slice=200, train=False)
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    with wandb.init(project='test-cnn', mode='online'):
-        model = CNNModel()
+        # datasets
+        train_dataset = get_data(approx_size=wandb.config.train_dataset_size, train=True,
+                                 dataset_name=wandb.config.dataset_name)
+        val_dataset = get_data(approx_size=wandb.config.val_dataset_size, train=False,
+                               dataset_name=wandb.config.dataset_name)
+
+        # data
+        input_channels, height, width = train_dataset[0][0].shape
+        wandb.config.update({'input_dimensions': {'height': height, 'width': width},
+                             'input_channels': input_channels},
+                            allow_val_change=True)
+
+        # model
+        if wandb.config.model_type == 'cnn':
+            model = CNNModel()
+        else:
+            raise NotImplementedError("Model type {:s} isn't implemented".format(wandb.config.model_type))
+
         model.to(device)
         print(model)
 
+        # train loop
         train(model, train_dataset, val_dataset, device)
 
-        model_input = torch.randn(
-            (1, 1, wandb.config.input_dimensions['height'], wandb.config.input_dimensions['width']), device=device)
+        # saving the model
+        model_input = val_dataset[0][0]
         save_model(model, model_input)
+
+        print('Input shape: ', model_input.shape)
 
         y = model(model_input)
         print('Output shape: ', y.shape)

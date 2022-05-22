@@ -15,7 +15,7 @@ class CNNModel(torch.nn.Module):
 
         self.convs = torch.nn.ModuleList(
             [torch.nn.Sequential(
-                torch.nn.Conv2d(in_channels=1 if i == 0 else self.config.channels,
+                torch.nn.Conv2d(in_channels=self.config.input_channels if i == 0 else self.config.channels,
                                 out_channels=self.config.channels,
                                 kernel_size=(self.config.kernel_size, self.config.kernel_size),
                                 padding=self.config.kernel_size // 2),
