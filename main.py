@@ -37,7 +37,7 @@ if __name__ == '__main__':
         train(model, train_dataset, val_dataset, device)
 
         # saving the model
-        model_input = val_dataset[0][0]
+        model_input = val_dataset[0][0].unsqueeze(0).to(device)
         save_model(model, model_input)
 
         print('Input shape: ', model_input.shape)
