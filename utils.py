@@ -9,6 +9,9 @@ import torchvision.transforms as transforms
 
 
 def get_data(slice=5, train=True):
+    # remove slow mirror from list of MNIST mirrors
+    torchvision.datasets.MNIST.mirrors = [mirror for mirror in torchvision.datasets.MNIST.mirrors
+                                          if not mirror.startswith("http://yann.lecun.com")]
     full_dataset = torchvision.datasets.MNIST(root=".",
                                               train=train,
                                               transform=transforms.ToTensor(),
