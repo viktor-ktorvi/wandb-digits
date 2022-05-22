@@ -2,6 +2,10 @@ epochs:
   desc: number of epochs
   value: 100
 
+batch_size:
+  desc: batch size
+  value: 32
+
 num_layers:
   desc: number of layers of the network
   value: 3
@@ -17,6 +21,10 @@ kernel_size:
 learning_rate:
   desc: learning rate
   value: 0.001
+
+weight_decay:
+  desc: L2 regularization
+  value: 0.00001
 
 input_dimensions:
   desc: input dimensions
