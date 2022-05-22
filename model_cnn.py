@@ -15,7 +15,7 @@ class CNNModel(torch.nn.Module):
 
         self.convs = torch.nn.ModuleList(
             [torch.nn.Sequential(
-                torch.nn.Conv2d(in_channels=3 if i == 0 else self.config.channels,
+                torch.nn.Conv2d(in_channels=1 if i == 0 else self.config.channels,
                                 out_channels=self.config.channels,
                                 kernel_size=(self.config.kernel_size, self.config.kernel_size),
                                 padding=self.config.kernel_size // 2),
@@ -27,11 +27,18 @@ class CNNModel(torch.nn.Module):
                                           kernel_size=(self.config.kernel_size, self.config.kernel_size),
                                           padding=self.config.kernel_size // 2)
 
+        in_features = self.config.input_dimensions['height'] * self.config.input_dimensions['width']
+        self.linear = torch.nn.Sequential(
+            torch.nn.Flatten(),
+            torch.nn.Linear(in_features=in_features, out_features=10)
+        )
+
     def forward(self, x):
         for i in range(len(self.convs)):
             x = self.convs[i](x)
 
         x = self.final_conv(x)
+        x = self.linear(x)
         return x
 
     def save_state_and_config(self, savepath):
