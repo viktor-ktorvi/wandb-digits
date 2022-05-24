@@ -20,8 +20,10 @@ if __name__ == '__main__':
 
         # data
         input_channels, height, width = train_dataset[0][0].shape
+        num_classes = len(train_dataset.dataset.classes)
         wandb.config.update({'input_dimensions': {'height': height, 'width': width},
-                             'input_channels': input_channels},
+                             'input_channels': input_channels,
+                             'num_classes': num_classes},
                             allow_val_change=True)
 
         # model

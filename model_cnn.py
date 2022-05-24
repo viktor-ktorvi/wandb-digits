@@ -30,7 +30,7 @@ class CNNModel(torch.nn.Module):
         in_features = self.config.input_dimensions['height'] * self.config.input_dimensions['width']
         self.linear = torch.nn.Sequential(
             torch.nn.Flatten(),
-            torch.nn.Linear(in_features=in_features, out_features=10)
+            torch.nn.Linear(in_features=in_features, out_features=self.config.num_classes)
         )
 
     def forward(self, x):
