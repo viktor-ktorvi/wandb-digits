@@ -37,6 +37,11 @@ def get_data(approx_size, train=True, dataset_name='mnist'):
                                                          train=train,
                                                          transform=transforms.ToTensor(),
                                                          download=True)
+    elif dataset_name == 'cifar100':
+        full_dataset = torchvision.datasets.CIFAR100(root="./data",
+                                                     train=train,
+                                                     transform=transforms.ToTensor(),
+                                                     download=True)
     else:
         raise NotImplementedError("Dataset {:s} isn't implemented".format(dataset_name))
 
