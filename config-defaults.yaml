@@ -1,8 +1,8 @@
 # Dataset
 
 dataset_name:
-  desc: name of the dataset to use ['mnist', 'cifar10']
-  value: 'cifar10'
+  desc: name of the dataset to use ['mnist', 'cifar10', 'fashion-mnist']
+  value: 'fashion-mnist'
 
 train_dataset_size:
   desc: number of samples in the train set

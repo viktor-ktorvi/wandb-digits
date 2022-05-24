@@ -23,7 +23,7 @@ def get_data(approx_size, train=True, dataset_name='mnist'):
         # remove slow mirror from list of MNIST mirrors
         torchvision.datasets.MNIST.mirrors = [mirror for mirror in torchvision.datasets.MNIST.mirrors
                                               if not mirror.startswith("http://yann.lecun.com")]
-        full_dataset = torchvision.datasets.MNIST(root=".",
+        full_dataset = torchvision.datasets.MNIST(root="./data",
                                                   train=train,
                                                   transform=transforms.ToTensor(),
                                                   download=True)
@@ -32,6 +32,11 @@ def get_data(approx_size, train=True, dataset_name='mnist'):
                                                     train=train,
                                                     download=True,
                                                     transform=transforms.ToTensor())
+    elif dataset_name == 'fashion-mnist':
+        full_dataset = torchvision.datasets.FashionMNIST(root="./data",
+                                                         train=train,
+                                                         transform=transforms.ToTensor(),
+                                                         download=True)
     else:
         raise NotImplementedError("Dataset {:s} isn't implemented".format(dataset_name))
 
