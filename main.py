@@ -20,7 +20,14 @@ if __name__ == '__main__':
 
         # data
         input_channels, height, width = train_dataset[0][0].shape
-        num_classes = len(train_dataset.dataset.classes)
+
+        if hasattr(train_dataset.dataset, 'classes'):
+            num_classes = len(train_dataset.dataset.classes)
+        elif hasattr(train_dataset.dataset, 'targets'):
+            num_classes = len(torch.tensor(train_dataset.dataset.targets).unique())
+        else:
+            raise ValueError("I don't know how to get the number of classes from this dataset!")
+
         wandb.config.update({'input_dimensions': {'height': height, 'width': width},
                              'input_channels': input_channels,
                              'num_classes': num_classes},

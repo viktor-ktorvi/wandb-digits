@@ -1,16 +1,16 @@
 # Dataset
 
 dataset_name:
-  desc: name of the dataset to use ['mnist', 'cifar10', 'fashion-mnist', 'cifar100', 'kmnist']
-  value: 'kmnist'
+  desc: name of the dataset to use ['mnist', 'cifar10', 'fashion-mnist', 'cifar100', 'kmnist', 'usps']
+  value: 'usps'
 
 train_dataset_size:
   desc: number of samples in the train set
-  value: 1000
+  value: 500
 
 val_dataset_size:
   desc: number of samples in the validation set
-  value: 200
+  value: 50
 
 # Train loop parameters
 

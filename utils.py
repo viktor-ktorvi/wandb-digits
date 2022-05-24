@@ -47,6 +47,11 @@ def get_data(approx_size, train=True, dataset_name='mnist'):
                                                    train=train,
                                                    transform=transforms.ToTensor(),
                                                    download=True)
+    elif dataset_name == 'usps':
+        full_dataset = torchvision.datasets.USPS(root="./data",
+                                                 train=train,
+                                                 transform=transforms.ToTensor(),
+                                                 download=True)
 
     else:
         raise NotImplementedError("Dataset {:s} isn't implemented".format(dataset_name))
